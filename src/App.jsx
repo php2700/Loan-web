@@ -2,7 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./Component/Home"
+import HomePage from "./Component/Home/Index"
 import Header from "./Component/Header";
 import Footer from "./Component/Footer";
 import Services from "./Component/Services";
