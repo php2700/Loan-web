@@ -18,7 +18,9 @@ const Banner = () => {
                               <h1 className="text-6xl font-bold text-gray-900 leading-tight mb-4">
                                     Small Business Loans For Daily Expenses.
                               </h1>
-                              <button onClick={handleSignUp} className="bg-black text-center flex font-bold text-white px-6 py-2 rounded hover:bg-[#0C3B57]">
+                              <button 
+                              // onClick={handleSignUp}
+                               className="bg-black text-center flex font-bold text-white px-6 py-2 rounded hover:bg-[#0C3B57]">
                                     APPLY FOR LOAN
                               </button>
                         </div>

@@ -20,13 +20,13 @@ const Signup = () => {
           Sign in with Google
         </button>
 
-        <div className="flex items-center my-6">
+        {/* <div className="flex items-center my-6">
           <hr className="flex-grow border-gray-300" />
           <span className="mx-3 text-gray-500 text-sm">OR</span>
           <hr className="flex-grow border-gray-300" />
-        </div>
+        </div> */}
 
-        <form className="space-y-4">
+        {/* <form className="space-y-4">
           <input
             type="email"
             placeholder="Email address"
@@ -43,14 +43,14 @@ const Signup = () => {
           >
             Sign In
           </button>
-        </form>
+        </form> */}
 
-        <p className="mt-6 text-center text-sm text-gray-600">
+        {/* <p className="mt-6 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
           <a href="#" className="text-[#0C3B57] font-medium ">
             Sign up
           </a>
-        </p>
+        </p> */}
       </div>
     </div>
 
