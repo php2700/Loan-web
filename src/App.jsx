@@ -2,9 +2,9 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./Component/Home"
 import Header from "./Component/Header";
 import Footer from "./Component/Footer";
-import Home from "./Component/Home";
 import Services from "./Component/Services";
 import Contact from "./Component/Contact";
 import Faq from "./Component/Faq";
@@ -19,7 +19,7 @@ function App() {
                         <Scroll />
                         <Header />
                         <Routes>
-                              <Route path="/" index element={<Home />} />
+                              <Route path="/" index element={<HomePage />} />
                               <Route path="/services" element={<Services />} />
                               <Route path="/contact" element={<Contact />} />
                               <Route path="/faq" element={<Faq />} />

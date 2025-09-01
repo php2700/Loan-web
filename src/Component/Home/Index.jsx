@@ -5,7 +5,7 @@ import QuoteCard from "./QuickCard";
 import Team from "./Team";
 import WhyChoose from "./WhyChoose";
 
-export default function Home() {
+export default function HomePage() {
       return (
             <>
                   <Banner />

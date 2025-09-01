@@ -21,7 +21,7 @@ function Footer() {
                                     <div className="h-10 ">
                                           <img
                                                 src={logo1}
-                                                className="h-full object-contain w-full"
+                                                className="h-full object-contain "
                                           />
                                     </div>
 
