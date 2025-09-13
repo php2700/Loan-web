@@ -1,5 +1,6 @@
 import React from "react";
 import { Check } from "lucide-react";
+import whyChoose from "../../assets/whyChoose.webp"
 
 const WhyChoose = () => {
       return (
@@ -10,21 +11,24 @@ const WhyChoose = () => {
                                     Why Choose Our Company
                               </p>
                               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                                    We Promise Sustainable Future For You.
+                                    Loan Approval in Seconds
                               </h2>
-                              <p className="text-gray-600 mb-6">
+                              {/* <p className="text-gray-600 mb-6">
                                     Lorem ipsum dolor sit amet, consectetur
                                     adipisicing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore magna aliqua.
                                     Ut enim ad minim veniam, quis nostrud.
-                              </p>
+                              </p> */}
 
                               <ul className="space-y-4">
                                     {[
-                                          "Aorem ipsum dgolor sitnfd amet dfgbn fbsdg",
-                                          "Consectetur adipisicing bfnelit, sedb dvbnfo",
-                                          "Eiusmod tempor incididunt vmqldupout labore",
-                                          "Admkde mibvnim veniam, quivds cnostrud",
+                                          "Get Upto ₹5 Lakh Instantly",
+                                          " 100% Online Paperless Process",
+                                          "No Salary Slip or CIBIL Needed",
+                                          "Minimum Documents Required",
+                                          "Student, Job Holder, Business – All Eligible",
+                                          "24x7 Loan Application Available",
+                                          "Secure & Trusted Platform"
                                     ].map((item, idx) => (
                                           <li
                                                 key={idx}
@@ -38,7 +42,7 @@ const WhyChoose = () => {
                         </div>
                         <div className="relative">
                               <img
-                                    src="https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg"
+                                    src={whyChoose}
                                     alt="Business professional"
                                     className="rounded-lg shadow-md"
                               />

@@ -1,60 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import heroBanner from "../../assets/hero_img.jpg";
-import bgImg from "../../assets/h1_hero.jpg"
+import bgImg from "../../assets/h1_hero.jpg";
 import { useNavigate } from "react-router-dom";
+import banner1 from "../../assets/banner1.png";
+import banner2 from "../../assets/banner2.webp";
+import banner3 from "../../assets/banner3.jpg";
+
+const images = [banner1, banner2, banner3];
 
 const Banner = () => {
-       const navigate=useNavigate()
-         const handleSignUp=()=>{
-            navigate('/apply')
-      }
-      return (
-            <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen"   style={{ backgroundImage: `url(${bgImg})` }} >
-                        <div className=" p-20 flex flex-col justify-center">
-                              <p className="text-[#0C3B57] text-xl font-semibold mb-2">
-                                    Achieve your financial goal
-                              </p>
-                              <h1 className="text-6xl font-bold text-gray-900 leading-tight mb-4">
-                                    Small Business Loans For Daily Expenses.
-                              </h1>
-                              <button 
-                              // onClick={handleSignUp}
-                               className="bg-black text-center flex font-bold text-white px-6 py-2 rounded hover:bg-[#0C3B57]">
-                                    APPLY FOR LOAN
-                              </button>
-                        </div>
+  const navigate = useNavigate();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-                        <div className="flex items-center justify-center">
-                              <img
-                                    src={heroBanner}
-                                    alt="Business professional"
-                                    className="w-full h-full object-cover"
-                              />
-                        </div>
-                  </div>
-                  <div className="w-full bg-[#0C3B57] text-white p-20 flex justify-around items-center ">
-                        <div className="flex items-center">
-                              <span className="text-xl mr-2">⏳</span>
-                              <p className="text-xl">
-                                    QUICK & EASY LOAN APPROVALS
-                              </p>
-                        </div>
-                        <div className="flex items-center">
-                              <span className="text-2xl mr-2">👍</span>
-                              <p className="text-xl">
-                                    QUICK & EASY LOAN APPROVALS
-                              </p>
-                        </div>
-                        <div className="flex items-center">
-                              <span className="text-2xl mr-2">💰</span>
-                              <p className="text-xl">
-                                    QUICK & EASY LOAN APPROVALS
-                              </p>
-                        </div>
-                  </div>
-            </>
+  const handleStarted = () => {
+    navigate("/apply");
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <>
+     <div className="relative grid grid-cols-1 min-h-[80vh] overflow-hidden">
+  <img
+    src={images[currentIndex]}
+    alt="Business professional"
+    className="w-full h-[100vh] object-cover transition-all duration-1000 ease-in-out"
+  />
+
+  <div className="absolute bottom-1 w-full flex justify-center">
+    <button onClick={handleStarted} className="text-xl px-6 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 transition cursor-pointer">
+      GET STARTED
+    </button>
+  </div>
+</div>
+
+    </>
+  );
 };
 
 export default Banner;

@@ -1,385 +1,300 @@
 import { useState } from "react";
 import bgImg from "../../assets/h1_hero.jpg";
+import axios from "axios";
 
 export default function Apply() {
-      const [formData, setFormData] = useState({
-            loanAmount: "",
-            purpose: "",
-            gender: "",
-            firstName: "",
-            lastName: "",
-            dependants: "",
-            email: "",
-            phone: "",
-            maritalStatus: "",
-            townCity: "",
-            street: "",
-            houseNumber: "",
-            homeownerStatus: "",
-            employmentIndustry: "",
-            employerName: "",
-            workPhone: "",
-            monthlyIncome: "",
-      });
+  const [formData, setFormData] = useState({
+    loanAmount: "",
+    loanType: "",
+    gender: "",
+    fullName: "",
+    fatherName: "",
+    motherName: "",
+    address: "",
+    city: "",
+    state: "",
+    occupation: "",
+    email: "",
+  });
 
-      const handleChange = (e) => {
-            const { name, value } = e.target;
-            setFormData({ ...formData, [name]: value });
-      };
+  const [error, setError] = useState(""); // for validation/server errors
+  const [loading, setLoading] = useState(false); // to disable button while submitting
+  const [success, setSuccess] = useState(""); // success message
 
-      const handleSubmit = (e) => {
-            e.preventDefault();
-            console.log("Form Submitted:", formData);
-            alert("Loan application submitted!");
-      };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setError(""); // clear error on change
+  };
 
-      return (
-            <section className="w-full  pt-16">
-                  <div
-                        className="h-[50vh] flex items-center justify-center bg-grid"
-                        style={{ backgroundImage: `url(${bgImg})` }}
-                  >
-                        <h1 className="text-6xl font-bold text-gray-800">
-                              APPLY LOAN
-                        </h1>
-                  </div>
-                  <div className="bg-gray-200 p-10">
-                        <form
-                              onSubmit={handleSubmit}
-                              className="max-w-6xl mx-auto p-10 bg-white shadow-md rounded-xl"
-                        >
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {/* Loan Amount & Purpose */}
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Loan Amount ($)
-                                          </label>
-                                          <input
-                                                type="number"
-                                                name="loanAmount"
-                                                value={formData.loanAmount}
-                                                onChange={handleChange}
-                                                placeholder="Enter amount"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Purpose of Loan
-                                          </label>
-                                          <select
-                                                name="purpose"
-                                                value={formData.purpose}
-                                                onChange={handleChange}
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          >
-                                                <option value="">
-                                                      Choose Categories
-                                                </option>
-                                                <option value="Business">
-                                                      Business
-                                                </option>
-                                                <option value="Education">
-                                                      Education
-                                                </option>
-                                                <option value="Medical">
-                                                      Medical
-                                                </option>
-                                                <option value="Home">
-                                                      Home
-                                                </option>
-                                          </select>
-                                    </div>
+  const validateForm = () => {
+    if (!formData.fullName.trim()) return "Full Name is required";
+    if (!formData.fatherName.trim()) return "Father Name is required";
+    if (!formData.motherName.trim()) return "Mother Name is required";
+    if (!formData.address.trim()) return "Address is required";
+    if (!formData.city.trim()) return "City is required";
+    if (!formData.state.trim()) return "State is required";
+    if (!formData.loanAmount || Number(formData.loanAmount) <= 0)
+      return "Loan Amount must be greater than 0";
+    if (!formData.loanType) return "Please select a Loan Type";
+    if (!formData.gender) return "Please select Gender";
+    if (!formData.occupation) return "Please select Occupation";
+    if (!formData.email.trim()) return "Email is required";
 
-                                    {/* Gender */}
-                                    <div className="md:col-span-2">
-                                          <label className="block font-semibold">
-                                                * Select Gender
-                                          </label>
-                                          <div className="flex items-center space-x-4 mt-2">
-                                                <label>
-                                                      <input
-                                                            type="radio"
-                                                            name="gender"
-                                                            value="Male"
-                                                            checked={
-                                                                  formData.gender ===
-                                                                  "Male"
-                                                            }
-                                                            onChange={
-                                                                  handleChange
-                                                            }
-                                                            className="mr-1"
-                                                      />
-                                                      Male
-                                                </label>
-                                                <label>
-                                                      <input
-                                                            type="radio"
-                                                            name="gender"
-                                                            value="Female"
-                                                            checked={
-                                                                  formData.gender ===
-                                                                  "Female"
-                                                            }
-                                                            onChange={
-                                                                  handleChange
-                                                            }
-                                                            className="mr-1"
-                                                      />
-                                                      Female
-                                                </label>
-                                          </div>
-                                    </div>
+    // Basic email check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) return "Enter a valid Email";
 
-                                    {/* Names */}
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * First Name
-                                          </label>
-                                          <input
-                                                type="text"
-                                                name="firstName"
-                                                value={formData.firstName}
-                                                onChange={handleChange}
-                                                placeholder="Enter name"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Last Name
-                                          </label>
-                                          <input
-                                                type="text"
-                                                name="lastName"
-                                                value={formData.lastName}
-                                                onChange={handleChange}
-                                                placeholder="Enter name"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
+    return "";
+  };
 
-                                    {/* Dependants */}
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Number of Dependants
-                                          </label>
-                                          <select
-                                                name="dependants"
-                                                value={formData.dependants}
-                                                onChange={handleChange}
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          >
-                                                <option value="">
-                                                      Choose Option
-                                                </option>
-                                                <option value="0">0</option>
-                                                <option value="1-2">1-2</option>
-                                                <option value="3-4">3-4</option>
-                                                <option value="5+">5+</option>
-                                          </select>
-                                    </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
-                                    {/* Email & Phone */}
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Email Address
-                                          </label>
-                                          <input
-                                                type="email"
-                                                name="email"
-                                                value={formData.email}
-                                                onChange={handleChange}
-                                                placeholder="Enter email"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Phone Number
-                                          </label>
-                                          <input
-                                                type="tel"
-                                                name="phone"
-                                                value={formData.phone}
-                                                onChange={handleChange}
-                                                placeholder="Enter number"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
 
-                                    {/* Marital Status */}
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Marital Status
-                                          </label>
-                                          <select
-                                                name="maritalStatus"
-                                                value={formData.maritalStatus}
-                                                onChange={handleChange}
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          >
-                                                <option value="">
-                                                      Choose Categories
-                                                </option>
-                                                <option value="Single">
-                                                      Single
-                                                </option>
-                                                <option value="Married">
-                                                      Married
-                                                </option>
-                                          </select>
-                                    </div>
-
-                                    {/* Address */}
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Town/City
-                                          </label>
-                                          <input
-                                                type="text"
-                                                name="townCity"
-                                                value={formData.townCity}
-                                                onChange={handleChange}
-                                                placeholder="Enter city"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Street
-                                          </label>
-                                          <input
-                                                type="text"
-                                                name="street"
-                                                value={formData.street}
-                                                onChange={handleChange}
-                                                placeholder="Enter street address"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * House Name/Number
-                                          </label>
-                                          <input
-                                                type="text"
-                                                name="houseNumber"
-                                                value={formData.houseNumber}
-                                                onChange={handleChange}
-                                                placeholder="Enter house number"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-
-                                    {/* Homeowner Status */}
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Homeowner Status
-                                          </label>
-                                          <select
-                                                name="homeownerStatus"
-                                                value={formData.homeownerStatus}
-                                                onChange={handleChange}
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          >
-                                                <option value="">
-                                                      Choose Option
-                                                </option>
-                                                <option value="Owner">
-                                                      Owner
-                                                </option>
-                                                <option value="Renter">
-                                                      Renter
-                                                </option>
-                                          </select>
-                                    </div>
-
-                                    {/* Employment */}
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Employment Industry
-                                          </label>
-                                          <input
-                                                type="text"
-                                                name="employmentIndustry"
-                                                value={
-                                                      formData.employmentIndustry
-                                                }
-                                                onChange={handleChange}
-                                                placeholder="Enter industry"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Employer Name
-                                          </label>
-                                          <input
-                                                type="text"
-                                                name="employerName"
-                                                value={formData.employerName}
-                                                onChange={handleChange}
-                                                placeholder="Enter employer name"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Work Phone Number
-                                          </label>
-                                          <input
-                                                type="tel"
-                                                name="workPhone"
-                                                value={formData.workPhone}
-                                                onChange={handleChange}
-                                                placeholder="Enter work phone"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                                    <div>
-                                          <label className="block font-semibold">
-                                                * Monthly Income ($)
-                                          </label>
-                                          <input
-                                                type="number"
-                                                name="monthlyIncome"
-                                                value={formData.monthlyIncome}
-                                                onChange={handleChange}
-                                                placeholder="Enter income"
-                                                className="w-full p-2 border rounded"
-                                                required
-                                          />
-                                    </div>
-                              </div>
-
-                              {/* Submit Button */}
-                              <div className="mt-6">
-                                    <button
-                                          type="submit"
-                                          className="w-full  md:w-auto px-6 py-2 bg-[#0C3B57] text-white font-semibold rounded "
-                                    >
-                                          APPLY NOW
-                                    </button>
-                              </div>
-                        </form>
-                  </div>
-            </section>
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${import.meta.env.VITE_APP_API_BASE_URL}api/user/apply-loan`,
+        formData
       );
+   
+
+      setSuccess("Your application submitted successfully!");
+      setFormData({
+        loanAmount: "",
+        loanType: "",
+        gender: "",
+        fullName: "",
+        fatherName: "",
+        motherName: "",
+        address: "",
+        city: "",
+        state: "",
+        occupation: "",
+        email: "",
+      });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section className="w-full pt-16">
+      {/* Hero Section */}
+      <div
+        className="h-[50vh] flex items-center justify-center bg-grid"
+        style={{ backgroundImage: `url(${bgImg})` }}
+      >
+        <h1 className="text-6xl font-bold text-gray-800">APPLY LOAN</h1>
+      </div>
+
+      {/* Form Section */}
+      <div className="bg-gray-200 p-10">
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-6xl mx-auto p-10 bg-white shadow-md rounded-xl"
+        >
+          {/* Show error or success messages */}
+          {error && (
+            <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">
+              {success}
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Full Name */}
+            <div>
+              <label className="block font-semibold">* Full Name</label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="Enter full name"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            {/* Father Name */}
+            <div>
+              <label className="block font-semibold">* Father Name</label>
+              <input
+                type="text"
+                name="fatherName"
+                value={formData.fatherName}
+                onChange={handleChange}
+                placeholder="Enter father name"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            {/* Mother Name */}
+            <div>
+              <label className="block font-semibold">* Mother Name</label>
+              <input
+                type="text"
+                name="motherName"
+                value={formData.motherName}
+                onChange={handleChange}
+                placeholder="Enter mother name"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            {/* Address */}
+            <div>
+              <label className="block font-semibold">* Address</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder="Enter address"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            {/* City */}
+            <div>
+              <label className="block font-semibold">* City</label>
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                placeholder="Enter city"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            {/* State */}
+            <div>
+              <label className="block font-semibold">* State</label>
+              <input
+                type="text"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                placeholder="Enter state"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            {/* Loan Amount */}
+            <div>
+              <label className="block font-semibold">* Loan Amount ($)</label>
+              <input
+                type="number"
+                name="loanAmount"
+                value={formData.loanAmount}
+                onChange={handleChange}
+                placeholder="Enter amount"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            {/* Loan Type */}
+            <div>
+              <label className="block font-semibold">* Loan Type</label>
+              <select
+                name="loanType"
+                value={formData.loanType}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+              >
+                <option value="">Choose Categories</option>
+                <option value="Personal">Personal</option>
+                <option value="Education">Study</option>
+                <option value="Business">Business</option>
+              </select>
+            </div>
+
+            {/* Gender */}
+            <div className="md:col-span-2">
+              <label className="block font-semibold">* Gender</label>
+              <div className="flex items-center space-x-4 mt-2">
+                <label>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="Male"
+                    checked={formData.gender === "Male"}
+                    onChange={handleChange}
+                    className="mr-1"
+                  />
+                  Male
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="Female"
+                    checked={formData.gender === "Female"}
+                    onChange={handleChange}
+                    className="mr-1"
+                  />
+                  Female
+                </label>
+              </div>
+            </div>
+
+            {/* Occupation */}
+            <div>
+              <label className="block font-semibold">* Occupation</label>
+              <select
+                name="occupation"
+                value={formData.occupation}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+              >
+                <option value="">Your Occupation</option>
+                <option value="Student">Student</option>
+                <option value="Job">Job</option>
+                <option value="Businessman">Businessman</option>
+              </select>
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block font-semibold">* Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter email"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+          </div>
+
+          {/* Submit */}
+          <div className="mt-6">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full md:w-auto px-6 py-2 bg-[#0C3B57] text-white font-semibold rounded disabled:opacity-50"
+            >
+              {loading ? "Submitting..." : "APPLY NOW"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
 }
