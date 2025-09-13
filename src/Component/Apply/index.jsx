@@ -14,7 +14,7 @@ export default function Apply() {
     city: "",
     state: "",
     occupation: "",
-    email: "",
+    // email: "",
   });
 
   const [error, setError] = useState(""); // for validation/server errors
@@ -39,11 +39,10 @@ export default function Apply() {
     if (!formData.loanType) return "Please select a Loan Type";
     if (!formData.gender) return "Please select Gender";
     if (!formData.occupation) return "Please select Occupation";
-    if (!formData.email.trim()) return "Email is required";
 
-    // Basic email check
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) return "Enter a valid Email";
+    // // Basic email check
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(formData.email)) return "Enter a valid Email";
 
     return "";
   };
@@ -79,7 +78,6 @@ export default function Apply() {
         city: "",
         state: "",
         occupation: "",
-        email: "",
       });
     } catch (err) {
       setError(err.message);
@@ -197,7 +195,7 @@ export default function Apply() {
 
             {/* Loan Amount */}
             <div>
-              <label className="block font-semibold">* Loan Amount ($)</label>
+              <label className="block font-semibold">* Loan Amount</label>
               <input
                 type="number"
                 name="loanAmount"
@@ -270,7 +268,7 @@ export default function Apply() {
             </div>
 
             {/* Email */}
-            <div>
+            {/* <div>
               <label className="block font-semibold">* Email</label>
               <input
                 type="email"
@@ -280,7 +278,7 @@ export default function Apply() {
                 placeholder="Enter email"
                 className="w-full p-2 border rounded"
               />
-            </div>
+            </div> */}
           </div>
 
           {/* Submit */}
