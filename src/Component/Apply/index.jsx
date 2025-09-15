@@ -1,8 +1,17 @@
 import { useState } from "react";
 import bgImg from "../../assets/h1_hero.jpg";
 import axios from "axios";
+import { QRCodeCanvas as QRCode } from "qrcode.react";
+import { useNavigate } from "react-router-dom";
 
 export default function Apply() {
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("loanToken");
+
+  const [loanApplicationId, setLoanApplicationId] = useState();
+  const [preview, setPreview] = useState(null);
+
   const [formData, setFormData] = useState({
     loanAmount: "",
     loanType: "",
@@ -17,14 +26,16 @@ export default function Apply() {
     // email: "",
   });
 
-  const [error, setError] = useState(""); // for validation/server errors
+  const [error, setError] = useState(""); 
   const [loading, setLoading] = useState(false); // to disable button while submitting
   const [success, setSuccess] = useState(""); // success message
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setError(""); // clear error on change
+    setError(""); 
   };
 
   const validateForm = () => {
@@ -40,14 +51,11 @@ export default function Apply() {
     if (!formData.gender) return "Please select Gender";
     if (!formData.occupation) return "Please select Occupation";
 
-    // // Basic email check
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(formData.email)) return "Enter a valid Email";
-
     return "";
   };
 
   const handleSubmit = async (e) => {
+    const userId = localStorage.getItem("userId");
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -57,15 +65,20 @@ export default function Apply() {
       setError(validationError);
       return;
     }
-
+    formData.userId = userId;
     try {
       setLoading(true);
       const response = await axios.post(
         `${import.meta.env.VITE_APP_API_BASE_URL}api/user/apply-loan`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-   
-
+      setLoanApplicationId(response?.data?.applyLoanData?._id);
+      setIsModalOpen(true);
       setSuccess("Your application submitted successfully!");
       setFormData({
         loanAmount: "",
@@ -85,10 +98,49 @@ export default function Apply() {
       setLoading(false);
     }
   };
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setUploadedFile(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handlePaymentSubmit = async () => {
+    if (!uploadedFile) {
+      alert("Please upload an image");
+      return;
+    }
+
+    const paymentData = new FormData();
+    paymentData.append("userId", userId);
+    paymentData.append("loanApplicationId", loanApplicationId);
+    paymentData.append("paymentImage", uploadedFile);
+
+    try {
+      await axios.patch(
+        `${import.meta.env.VITE_APP_API_BASE_URL}api/user/payment-proof`,
+        paymentData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIsModalOpen(false);
+      setUploadedFile(null);
+      navigate("/referrals");
+    } catch (err) {
+      alert(
+        "Error submitting payment proof: " +
+          (err.response?.data?.message || err.message)
+      );
+    }
+  };
 
   return (
     <section className="w-full pt-16">
-      {/* Hero Section */}
       <div
         className="h-[50vh] flex items-center justify-center bg-grid"
         style={{ backgroundImage: `url(${bgImg})` }}
@@ -96,7 +148,6 @@ export default function Apply() {
         <h1 className="text-6xl font-bold text-gray-800">APPLY LOAN</h1>
       </div>
 
-      {/* Form Section */}
       <div className="bg-gray-200 p-10">
         <form
           onSubmit={handleSubmit}
@@ -293,6 +344,60 @@ export default function Apply() {
           </div>
         </form>
       </div>
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 w-[400px] shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Complete Payment</h2>
+
+            {/* QR Code */}
+            <div className="flex justify-center mb-4">
+              <QRCode value={`pay-to-user-${userId}`} size={150} />
+            </div>
+            <p className="text-sm text-gray-600 text-center mb-4">
+              Scan this QR code to make payment.
+            </p>
+
+            <div className="mb-4">
+              <label
+                htmlFor="payment-proof"
+                className="block w-full px-4 py-2 text-center bg-gray-100 border border-gray-300 rounded cursor-pointer hover:bg-gray-200"
+              >
+                Upload Payment Screenshot
+              </label>
+              <input
+                id="payment-proof"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </div>
+            {preview && (
+              <div className="flex justify-center mb-4">
+                <img
+                  src={preview}
+                  alt="Payment Preview"
+                  className="w-24 h-24 object-cover rounded border"
+                />
+              </div>
+            )}
+            <div className="flex justify-between">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 bg-gray-300 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handlePaymentSubmit}
+                className="px-4 py-2 bg-[#0C3B57] text-white rounded"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

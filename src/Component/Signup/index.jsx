@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Home, Phone, Mail } from "lucide-react";
 import bgImg from "../../assets/h1_hero.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { setLoanToken } = useContext(UserContext);
+  const [referralCode, setReferralCode] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const handleReferralChange = useCallback((e) => {
+    setReferralCode(e.target.value);
+  }, []);
+
   const handleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       await axios
@@ -15,8 +24,14 @@ const Signup = () => {
           accessToken: tokenResponse?.access_token,
         })
         .then((res) => {
-          // console.log(res, "res---------");
-          navigate("/");
+          setLoanToken(res?.data?.token);
+          localStorage.setItem("loanToken", res?.data?.token);
+          localStorage.setItem("userId", res.data?.user?._id);
+          if (!res?.data?.isAlreadyCreated) {
+            setShowModal(true);
+          } else {
+            navigate("/apply");
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -26,6 +41,26 @@ const Signup = () => {
       console.log("login failed");
     },
   });
+
+  const handleSubmit = useCallback(() => {
+    const userId = localStorage.getItem("userId");
+    setShowModal(false);
+    axios
+      .patch(
+        `${import.meta.env.VITE_APP_API_BASE_URL}api/user/update-refferBy`,
+        {
+          _id: userId,
+          referredBy: referralCode,
+        }
+      )
+      .then((res) => {
+        navigate("/apply");
+      })
+      .catch((error) => {
+        console.log(error, "Referral update error");
+      });
+  }, []);
+
   return (
     <section className="pt-16 w-full">
       <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -41,38 +76,41 @@ const Signup = () => {
             <FcGoogle className="w-6 h-6" />
             Sign in with Google
           </button>
+          {showModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h2 className="text-xl font-semibold mb-4">Referral Code</h2>
+                <p className="mb-4">Do you have a referral code?</p>
 
-          {/* <div className="flex items-center my-6">
-          <hr className="flex-grow border-gray-300" />
-          <span className="mx-3 text-gray-500 text-sm">OR</span>
-          <hr className="flex-grow border-gray-300" />
-        </div> */}
+                <input
+                  type="text"
+                  placeholder="Enter referral code"
+                  value={referralCode}
+                  onChange={handleReferralChange}
+                  className="w-full border rounded px-3 py-2 mb-4"
+                />
 
-          {/* <form className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email address"
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-          />
-          <button
-            type="submit"
-            className="w-full bg-[#0C3B57] text-white font-medium rounded-lg px-4 py-3 cursor-pointer transition"
-          >
-            Sign In
-          </button>
-        </form> */}
+                <div className="flex justify-between">
+                  <button
+                    className="px-4 py-2 bg-gray-300 rounded"
+                    onClick={() => {
+                      setShowModal(false);
+                      navigate("/apply");
+                    }}
+                  >
+                    Skip
+                  </button>
 
-          {/* <p className="mt-6 text-center text-sm text-gray-600">
-          Don’t have an account?{" "}
-          <a href="#" className="text-[#0C3B57] font-medium ">
-            Sign up
-          </a>
-        </p> */}
+                  <button
+                    className="px-4 py-2 bg-blue-600 text-white rounded"
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

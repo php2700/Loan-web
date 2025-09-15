@@ -13,7 +13,7 @@ const Banner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleStarted = () => {
-    navigate("/apply");
+    navigate("/signup");
   };
 
   useEffect(() => {
@@ -28,20 +28,22 @@ const Banner = () => {
 
   return (
     <>
-     <div className="relative grid grid-cols-1 min-h-[80vh] overflow-hidden">
-  <img
-    src={images[currentIndex]}
-    alt="Business professional"
-    className="w-full h-[100vh] object-cover transition-all duration-1000 ease-in-out"
-  />
+      <div className="relative grid grid-cols-1 min-h-[80vh] overflow-hidden">
+        <img
+          src={images[currentIndex]}
+          alt="Business professional"
+          className="w-full h-[100vh] object-cover transition-all duration-1000 ease-in-out"
+        />
 
-  <div className="absolute bottom-1 w-full flex justify-center">
-    <button onClick={handleStarted} className="text-xl px-6 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 transition cursor-pointer">
-      GET STARTED
-    </button>
-  </div>
-</div>
-
+        <div className="absolute bottom-1 w-full flex justify-center">
+          <button
+            onClick={handleStarted}
+            className="text-xl px-6 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 transition cursor-pointer"
+          >
+            GET STARTED
+          </button>
+        </div>
+      </div>
     </>
   );
 };
