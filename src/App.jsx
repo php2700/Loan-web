@@ -13,6 +13,8 @@ import Signup from "./Component/Signup";
 import Scroll from "./Component/Scroll/indexs";
 import { Referral } from "./Component/Referrals";
 import { UserProvider } from "./Component/Context";
+import { Applied } from "./Component/AppliedList";
+import AddBankDetail from "./Component/Bank";
 
 function App() {
   const PrivateRoute = ({ children }) => {
@@ -27,8 +29,10 @@ function App() {
     <>
       <UserProvider>
         <BrowserRouter>
+          <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">
           <Scroll />
-          <Header />
           <Routes>
             <Route path="/" index element={<HomePage />} />
             <Route path="/services" element={<Services />} />
@@ -37,8 +41,12 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/apply" element={<PrivateRoute><Apply /></PrivateRoute>} />
             <Route path="/referrals" element={<PrivateRoute><Referral /></PrivateRoute>} />
+            <Route path="/applied-list" element={<PrivateRoute><Applied /></PrivateRoute>} />
+            <Route path='/add-bank-detail' element={<PrivateRoute><AddBankDetail/></PrivateRoute>} />
           </Routes>
+          </main>
           <Footer />
+          </div>
         </BrowserRouter>
       </UserProvider>
     </>

@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { User, LogOut, List } from "lucide-react"; // icons
+import { User, LogOut, List, FileEdit, Database } from "lucide-react"; // icons
 import logo1 from "../../assets/logo1.png";
 import axios from "axios";
 import { UserContext } from "../Context";
 
 const Header = () => {
   const navigate = useNavigate();
+  const menuRef = useRef(null);
   const { loanToken } = useContext(UserContext);
 
   const [user, setUser] = useState(null);
@@ -52,6 +53,19 @@ const Header = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className="flex z-10 fixed top-0 left-0 w-full items-center justify-between px-10 py-4 bg-white shadow-sm">
       <div className="h-10">
@@ -86,7 +100,7 @@ const Header = () => {
           SIGN UP
         </button>
       ) : (
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
           <button
             className="flex items-center gap-2 px-4 py-2 cursor-pointer border rounded-lg hover:bg-gray-100"
             onClick={() => setMenuOpen((prev) => !prev)}
@@ -113,7 +127,16 @@ const Header = () => {
                 }}
                 className="flex items-center w-full px-3 py-2 rounded hover:bg-gray-100"
               >
-                <List className="w-4 h-4 mr-2" /> Apply
+                <Database className="w-4 h-4 mr-2" /> Apply Loan
+              </button>
+               <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/add-bank-detail");
+                }}
+                className="flex items-center w-full px-3 py-2 rounded hover:bg-gray-100"
+              >
+                <Database className="w-4 h-4 mr-2" /> Bank Detail
               </button>
               <button
                 onClick={() => {
@@ -123,6 +146,15 @@ const Header = () => {
                 className="flex items-center w-full px-3 py-2 rounded hover:bg-gray-100"
               >
                 <List className="w-4 h-4 mr-2" /> Referral List
+              </button>
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/applied-list");
+                }}
+                className="flex items-center w-full px-3 py-2 rounded hover:bg-gray-100"
+              >
+                <List className="w-4 h-4 mr-2" /> Applied List
               </button>
               <button
                 onClick={handleLogout}
