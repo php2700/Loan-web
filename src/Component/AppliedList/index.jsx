@@ -63,6 +63,21 @@ export const Applied = () => {
                 Occupation
               </th>
               <th className="py-2 px-4 text-left border-b border-gray-200">
+                Account Holder
+              </th>
+              <th className="py-2 px-4 text-left border-b border-gray-200">
+                Account Number
+              </th>
+              <th className="py-2 px-4 text-left border-b border-gray-200">
+                IFSC Code
+              </th>
+              <th className="py-2 px-4 text-left border-b border-gray-200">
+                Bank Name
+              </th>
+              <th className="py-2 px-4 text-left border-b border-gray-200">
+                Branch
+              </th>
+              <th className="py-2 px-4 text-left border-b border-gray-200">
                 Status
               </th>
               <th className="py-2 px-4 text-left border-b border-gray-200">
@@ -106,6 +121,21 @@ export const Applied = () => {
                   </td>
                   <td className="py-2 px-4 border-b border-gray-200">
                     {apply.occupation}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200">
+                    {apply.accountHolderName ? apply.accountHolderName :'N/A'}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200">
+                    {apply.accountNumber ? apply.accountNumber :'N/A'}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200">
+                    {apply.ifscCode ? apply.ifscCode :'N/A'}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200">
+                    {apply.bankName ? apply.bankName :'N/A'}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200">
+                    {apply.branchName ? apply.branchName :'N/A'}
                   </td>
                   <td
                     className={`py-2 px-4 border-b border-gray-200 ${

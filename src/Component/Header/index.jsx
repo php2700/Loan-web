@@ -4,6 +4,7 @@ import { User, LogOut, List, FileEdit, Database } from "lucide-react"; // icons
 import logo1 from "../../assets/logo1.png";
 import axios from "axios";
 import { UserContext } from "../Context";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ const Header = () => {
         />
       </div>
 
-      <ul className="flex space-x-8 font-semibold text-gray-900">
+      {/* <ul className="flex space-x-8 font-semibold text-gray-900">
         <li className="relative group text-lg">
           <Link to="/">Home</Link>
           <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-[#0C3B57] text-xl transition-all group-hover:w-full"></span>
@@ -89,6 +90,68 @@ const Header = () => {
         </li>
         <li className="hover:text-[#0C3B57] text-xl cursor-pointer">
           <Link to="/contact">Contact</Link>
+        </li>
+      </ul> */}
+
+      <ul className="flex space-x-8 font-semibold text-gray-900">
+        <li>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `px-3 py-2 border-b-2 text-lg transition ${
+                isActive
+                  ? "border-[#0C3B57] text-[#0C3B57] font-bold"
+                  : "border-gray-300 text-gray-800 hover:border-[#0C3B57] hover:text-[#0C3B57]"
+              }`
+            }
+          >
+            Home
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to="/services"
+            className={({ isActive }) =>
+              `px-3 py-2 border-b-2 text-lg transition ${
+                isActive
+                  ? "border-[#0C3B57] text-[#0C3B57] font-bold"
+                  : "border-gray-300 text-gray-800 hover:border-[#0C3B57] hover:text-[#0C3B57]"
+              }`
+            }
+          >
+            Services
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to="/faq"
+            className={({ isActive }) =>
+              `px-3 py-2 border-b-2 text-lg transition ${
+                isActive
+                  ? "border-[#0C3B57] text-[#0C3B57] font-bold"
+                  : "border-gray-300 text-gray-800 hover:border-[#0C3B57] hover:text-[#0C3B57]"
+              }`
+            }
+          >
+            Faqs
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `px-3 py-2 border-b-2 text-lg transition ${
+                isActive
+                  ? "border-[#0C3B57] text-[#0C3B57] font-bold"
+                  : "border-gray-300 text-gray-800 hover:border-[#0C3B57] hover:text-[#0C3B57]"
+              }`
+            }
+          >
+            Contact
+          </NavLink>
         </li>
       </ul>
 
@@ -129,7 +192,7 @@ const Header = () => {
               >
                 <Database className="w-4 h-4 mr-2" /> Apply Loan
               </button>
-               <button
+              {/* <button
                 onClick={() => {
                   setMenuOpen(false);
                   navigate("/add-bank-detail");
@@ -137,7 +200,7 @@ const Header = () => {
                 className="flex items-center w-full px-3 py-2 rounded hover:bg-gray-100"
               >
                 <Database className="w-4 h-4 mr-2" /> Bank Detail
-              </button>
+              </button> */}
               <button
                 onClick={() => {
                   setMenuOpen(false);

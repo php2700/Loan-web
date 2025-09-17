@@ -8,12 +8,17 @@ export default function Apply() {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("loanToken");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [successModel, setSuccessModel] = useState(false);
 
   const [loanApplicationId, setLoanApplicationId] = useState();
   const [preview, setPreview] = useState(null);
 
   const [formData, setFormData] = useState({
-    loanAmount: "",
     loanType: "",
     gender: "",
     fullName: "",
@@ -23,14 +28,12 @@ export default function Apply() {
     city: "",
     state: "",
     occupation: "",
-    // email: "",
+    accountHolderName: "",
+    accountNumber: "",
+    ifscCode: "",
+    bankName: "",
+    branchName: "",
   });
-
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(""); // success message
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,15 +48,15 @@ export default function Apply() {
     if (!formData.address.trim()) return "Address is required";
     if (!formData.city.trim()) return "City is required";
     if (!formData.state.trim()) return "State is required";
-    if (
-      !formData.loanAmount ||
-      Number(formData.loanAmount) < 50 ||
-      Number(formData.loanAmount) > 200
-    )
-      return "Loan Amount must be between 50-200";
     if (!formData.loanType) return "Please select a Loan Type";
     if (!formData.gender) return "Please select Gender";
     if (!formData.occupation) return "Please select Occupation";
+    if (!formData.accountHolderName.trim())
+      return "Account holder name is required";
+    if (!formData.accountNumber.trim()) return "Account number is required";
+    if (!formData.ifscCode.trim()) return "IFSC Code is required";
+    if (!formData.bankName.trim()) return "Bank name is required";
+    if (!formData.branchName.trim()) return "Branch name is required";
 
     return "";
   };
@@ -70,6 +73,7 @@ export default function Apply() {
       return;
     }
     formData.userId = userId;
+    formData.loanAmount=500;
     try {
       setLoading(true);
       const response = await axios.post(
@@ -85,7 +89,6 @@ export default function Apply() {
       setIsModalOpen(true);
       setSuccess("Your application submitted successfully!");
       setFormData({
-        loanAmount: "",
         loanType: "",
         gender: "",
         fullName: "",
@@ -95,6 +98,11 @@ export default function Apply() {
         city: "",
         state: "",
         occupation: "",
+        accountHolderName: "",
+        accountNumber: "",
+        ifscCode: "",
+        bankName: "",
+        branchName: "",
       });
     } catch (err) {
       setError(err.message);
@@ -134,7 +142,12 @@ export default function Apply() {
       );
       setIsModalOpen(false);
       setUploadedFile(null);
-      navigate("/referrals");
+      setSuccessModel(true);
+
+      setTimeout(() => {
+        setSuccessModel(false);
+        navigate("/referrals");
+      }, 4000);
     } catch (err) {
       alert(
         "Error submitting payment proof: " +
@@ -253,10 +266,9 @@ export default function Apply() {
               <label className="block font-semibold">* Loan Amount</label>
               <input
                 type="number"
+                disabled
                 name="loanAmount"
-                value={formData.loanAmount}
-                onChange={handleChange}
-                placeholder="Enter amount Between 50 and 200 only"
+                value={500}
                 className="w-full p-2 border rounded"
               />
             </div>
@@ -321,6 +333,65 @@ export default function Apply() {
                 <option value="Businessman">Businessman</option>
               </select>
             </div>
+            <div>
+              <label className="block font-semibold">
+                * Account Holder Name
+              </label>
+              <input
+                type="text"
+                name="accountHolderName"
+                value={formData.accountHolderName}
+                onChange={handleChange}
+                placeholder="Enter account holder name"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div>
+              <label className="block font-semibold">* Account Number</label>
+              <input
+                type="text"
+                name="accountNumber"
+                value={formData.accountNumber}
+                onChange={handleChange}
+                placeholder="Enter account number"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div>
+              <label className="block font-semibold">* IFSC Code</label>
+              <input
+                type="text"
+                name="ifscCode"
+                value={formData.ifscCode}
+                onChange={handleChange}
+                placeholder="Enter IFSC code"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold">* Bank Name</label>
+              <input
+                type="text"
+                name="bankName"
+                value={formData.bankName}
+                onChange={handleChange}
+                placeholder="Enter bank name"
+                className="w-full p-2 border rounded"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold">* Branch Name</label>
+              <input
+                type="text"
+                name="branchName"
+                value={formData.branchName}
+                onChange={handleChange}
+                placeholder="Enter branch name"
+                className="w-full p-2 border rounded"
+              />
+            </div>
 
             {/* Email */}
             {/* <div>
@@ -349,10 +420,12 @@ export default function Apply() {
         </form>
       </div>
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
           <div className="bg-white rounded-lg p-6 w-[400px] shadow-lg">
             <h2 className="text-xl font-bold mb-4">Complete Payment</h2>
-
+            <div className="text-sm text-gray-600 text-center mb-4">
+              your prossecing fee is 100 only
+            </div>
             {/* QR Code */}
             <div className="flex justify-center mb-4">
               <QRCode value={`pay-to-user-${userId}`} size={150} />
@@ -399,6 +472,15 @@ export default function Apply() {
                 Submit
               </button>
             </div>
+          </div>
+        </div>
+      )}
+      {successModel && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-md">
+          <div className="bg-white rounded-lg p-6 w-[400px] shadow-lg">
+            <p className="text-lg font-semibold text-gray-600 text-center mb-4">
+              within 24 hours loan amount disbursed in your bank account
+            </p>
           </div>
         </div>
       )}
