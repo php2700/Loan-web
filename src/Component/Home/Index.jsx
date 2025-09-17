@@ -12,7 +12,7 @@ export default function HomePage() {
                   <AboutSection />
                   <WhyChoose />
                   <Team />
-                  <QuoteCard />
+                  {/* <QuoteCard /> */}
             </>
       );
 }

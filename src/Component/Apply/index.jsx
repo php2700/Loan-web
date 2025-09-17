@@ -26,8 +26,8 @@ export default function Apply() {
     // email: "",
   });
 
-  const [error, setError] = useState(""); 
-  const [loading, setLoading] = useState(false); // to disable button while submitting
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(""); // success message
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -35,7 +35,7 @@ export default function Apply() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setError(""); 
+    setError("");
   };
 
   const validateForm = () => {
@@ -45,8 +45,12 @@ export default function Apply() {
     if (!formData.address.trim()) return "Address is required";
     if (!formData.city.trim()) return "City is required";
     if (!formData.state.trim()) return "State is required";
-    if (!formData.loanAmount || Number(formData.loanAmount) <= 0)
-      return "Loan Amount must be greater than 0";
+    if (
+      !formData.loanAmount ||
+      Number(formData.loanAmount) < 50 ||
+      Number(formData.loanAmount) > 200
+    )
+      return "Loan Amount must be between 50-200";
     if (!formData.loanType) return "Please select a Loan Type";
     if (!formData.gender) return "Please select Gender";
     if (!formData.occupation) return "Please select Occupation";
@@ -252,7 +256,7 @@ export default function Apply() {
                 name="loanAmount"
                 value={formData.loanAmount}
                 onChange={handleChange}
-                placeholder="Enter amount"
+                placeholder="Enter amount Between 50 and 200 only"
                 className="w-full p-2 border rounded"
               />
             </div>

@@ -38,7 +38,7 @@ const Banner = () => {
         <div className="absolute bottom-1 w-full flex justify-center">
           <button
             onClick={handleStarted}
-            className="text-xl px-6 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 transition cursor-pointer"
+            className="text-xl px-6 py-2 rounded-xl text-white font-bold bg-red-500 hover:bg-red-600 transition cursor-pointer"
           >
             GET STARTED
           </button>

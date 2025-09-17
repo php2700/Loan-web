@@ -77,7 +77,7 @@ export const Referral = () => {
               <tr>
                 <td
                   colSpan={2}
-                  className="py-2 px-4 border-b border-gray-200 text-center text-gray-500"
+                  className="py-2 px-4 border-b border-gray-200 text-center w-full text-gray-500"
                 >
                   No Record Found
                 </td>
@@ -86,22 +86,20 @@ export const Referral = () => {
           )}
         </table>
 
-     {referrals?.length > 0 && (
-  <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-md text-center">
-    <p className="text-lg font-semibold text-gray-700">
-      🎉 Your Total Referral Bonus:{" "}
-      <span className="text-blue-600 text-xl font-bold">
-        ₹ {amount * referrals.length}
-      </span>
-    </p>
-    <p className="text-sm text-gray-600 mt-1">
-      You will receive this amount in your account within{" "}
-      <span className="font-medium text-gray-800">7 days</span>.
-    </p>
-  </div>
-)}
-
-
+        {referrals?.length > 0 && (
+          <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-md text-center">
+            <p className="text-lg font-semibold text-gray-700">
+              🎉 Your Total Referral Bonus:{" "}
+              <span className="text-blue-600 text-xl font-bold">
+                ₹ {amount * referrals.length}
+              </span>
+            </p>
+            <p className="text-sm text-gray-600 mt-1">
+              You will receive this amount in your account within{" "}
+              <span className="font-medium text-gray-800">7 days</span>.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -64,18 +64,21 @@ const Signup = () => {
   return (
     <section className="pt-16 w-full">
       <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-center text-[#0C3B57] mb-6">
+
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 border border-gray-100 transform transition hover:shadow-3xl font-[Poppins]">
+          {/* Heading */}
+          <h2 className="text-3xl font-extrabold text-center text-[#0C3B57] mb-8 tracking-wide font-[Montserrat]">
             Sign in to Your Account
           </h2>
 
           <button
             onClick={handleLogin}
-            className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg px-4 py-3 text-gray-700 font-medium hover:bg-gray-50 transition"
+            className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-xl px-5 py-3 text-gray-800 font-semibold bg-gradient-to-r from-white to-gray-50 hover:from-gray-100 hover:to-white hover:shadow-md transition duration-300"
           >
-            <FcGoogle className="w-6 h-6" />
-            Sign in with Google
+            <FcGoogle className="w-7 h-7" />
+            Continue with Google
           </button>
+
           {showModal && (
             <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
               <div className="bg-white p-6 rounded-lg shadow-lg w-96">
