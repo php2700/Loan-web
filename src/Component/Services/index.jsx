@@ -13,26 +13,27 @@ import serviceImg from "../../assets/our-service.jpg";
 
 const Services = () => {
   const services = [
-    {
-      icon: <Briefcase size={48} className="text-[#0C3B57] mx-auto mb-4" />,
-      title: "Business Loan",
-      desc: "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore",
-    },
-    {
-      icon: <Building2 size={48} className="text-[#0C3B57] mx-auto mb-4" />,
-      title: "Commercial Loans",
-      desc: "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore",
-    },
-    {
-      icon: <Home size={48} className="text-[#0C3B57] mx-auto mb-4" />,
-      title: "Construction Loans",
-      desc: "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore",
-    },
-    {
-      icon: <ThumbsUp size={48} className="text-[#0C3B57] mx-auto mb-4" />,
-      title: "Business Loan",
-      desc: "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore",
-    },
+   {
+  icon: <Briefcase size={48} className="text-[#0C3B57] mx-auto mb-4" />,
+  title: "Business Loan",
+  desc: "Flexible loans to support your business growth and working capital needs.",
+},
+{
+  icon: <Building2 size={48} className="text-[#0C3B57] mx-auto mb-4" />,
+  title: "Commercial Loans",
+  desc: "Tailored financing options for real estate, offices, and commercial ventures.",
+},
+{
+  icon: <Home size={48} className="text-[#0C3B57] mx-auto mb-4" />,
+  title: "Construction Loans",
+  desc: "Funding solutions to start, manage, or complete your construction projects.",
+},
+{
+  icon: <ThumbsUp size={48} className="text-[#0C3B57] mx-auto mb-4" />,
+  title: "Business Loan",
+  desc: "Quick approvals and flexible repayment plans designed for entrepreneurs.",
+}
+,
     {
       icon: <Car size={48} className="text-[#0C3B57] mx-auto mb-4" />,
       title: "Vehicle Loan",
