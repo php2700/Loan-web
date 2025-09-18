@@ -37,11 +37,10 @@ const AboutSection = () => {
                                     adipisicing elit, oeiusmod tempor incididunt
                                     ut labore et dolore magna aliqu.
                               </p>
-                              <button 
-                              // onClick={handleSignUp} 
+                              {/* <button 
                               className="bg-gray-900 text-white px-6 py-3 rounded-md font-semibold hover:bg-[#0C3B57] transition">
                                     APPLY FOR LOAN
-                              </button>
+                              </button> */}
                         </div>
                   </div>
             </section>

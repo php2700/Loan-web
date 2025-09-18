@@ -61,10 +61,10 @@ function Footer() {
             <h2 className="text-xl font-semibold mb-4">Support</h2>
             <ul className="space-y-2 text-gray-400">
               {/* <li className="hover:text-white cursor-pointer">FAQ</li> */}
-              <li className="hover:text-white cursor-pointer">
+              <li className="hover:text-white cursor-pointer" onClick={()=>handleUrl("term-condition")}>
                 Terms & Conditions
               </li>
-              <li className="hover:text-white cursor-pointer">
+              <li className="hover:text-white cursor-pointer" onClick={()=>handleUrl("privacy-policy")}>
                 Privacy Policy
               </li>
               {/* <li className="hover:text-white cursor-pointer">

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Home, Phone, Mail } from "lucide-react";
 import bgImg from "../../assets/h1_hero.jpg";
 import axios from "axios";
+import contactImg from "../../assets/contact.jpg";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData,"ghghggh")
+    console.log(formData, "ghghggh");
     if (!formData.message.trim()) {
       setError("Message is required");
       setSuccess("");
@@ -37,7 +38,7 @@ const Contact = () => {
       setSuccess("");
       return;
     }
-  
+
     if (!formData.subject.trim()) {
       setError("Subject is required");
       setSuccess("");
@@ -61,10 +62,11 @@ const Contact = () => {
   return (
     <section className="pt-16 w-full">
       <div
-        className="h-[50vh] flex items-center justify-center bg-grid"
-        style={{ backgroundImage: `url(${bgImg})` }}
+        className="h-[50vh] bg-grid"
+        // style={{ backgroundImage: `url(${bgImg})` }}
       >
-        <h1 className="text-6xl font-bold text-gray-800">Contact Us</h1>
+        {/* <h1 className="text-6xl font-bold text-gray-800">Contact Us</h1> */}
+        <img src={contactImg} className="w-full h-full" />
       </div>
       <div className="bg-gray-200 p-20">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -111,7 +113,7 @@ const Contact = () => {
               </div>
 
               <input
-              name="subject"
+                name="subject"
                 type="text"
                 value={formData.subject}
                 onChange={handleChange}

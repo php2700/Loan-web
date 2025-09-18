@@ -28,17 +28,17 @@ const Banner = () => {
 
   return (
     <>
-      <div className="relative grid grid-cols-1 min-h-[80vh] overflow-hidden">
+      <div className="relative grid grid-cols-1 min-h-[60vh] md:min-h-[80vh] overflow-hidden">
         <img
           src={images[currentIndex]}
           alt="Business professional"
-          className="w-full h-[100vh] object-cover transition-all duration-1000 ease-in-out"
+          className="w-full h-[60vh] md:h-[80vh] lg:h-[100vh] object-cover transition-all duration-1000 ease-in-out"
         />
 
-        <div className="absolute bottom-1 w-full flex justify-center">
+        <div className="absolute bottom-4 w-full flex justify-center">
           <button
             onClick={handleStarted}
-            className="text-xl px-6 py-2 rounded-xl text-white font-bold bg-red-500 hover:bg-red-600 transition cursor-pointer"
+            className="text-base sm:text-lg md:text-xl px-4 sm:px-6 py-2 rounded-lg sm:rounded-xl text-white font-bold bg-red-500 hover:bg-red-600 transition cursor-pointer"
           >
             GET STARTED
           </button>

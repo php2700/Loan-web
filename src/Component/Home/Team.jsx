@@ -9,22 +9,22 @@ import member4 from "../../assets/teamMember4.jpg";
 const Team = () => {
   const members = [
     {
-      name: "Bruce Roberts",
+      name: "Rajesh Kumar",
       role: "Volunteer leader",
       img: member1,
     },
     {
-      name: "Bruce Roberts",
+      name: "Amit Sharma",
       role: "Volunteer leader",
       img: member2,
     },
     {
-      name: "Bruce Roberts",
+      name: "Rohan Verma",
       role: "Volunteer leader",
       img: member3,
     },
     {
-      name: "Bruce Roberts",
+      name: "Arjun Singh",
       role: "Volunteer leader",
       img: member4,
     },
@@ -58,7 +58,7 @@ const Team = () => {
                 <h3 className="text-lg font-semibold text-gray-900">
                   {member.name}
                 </h3>
-                <p className="text-sm text-gray-500">{member.role}</p>
+                {/* <p className="text-sm text-gray-500">{member.role}</p> */}
               </div>
             </div>
           ))}

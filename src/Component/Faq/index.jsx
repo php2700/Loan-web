@@ -1,5 +1,6 @@
 import { useState } from "react";
 import bgImg from "../../assets/h1_hero.jpg";
+import faqImg  from "../../assets/faq.webp"
 import heroBanner from "../../assets/hero_img.jpg";
 
 export default function Faq() {
@@ -32,14 +33,10 @@ export default function Faq() {
       };
       return (
             <section className="pt-16 w-full">
-                  <div
-                        className="h-[50vh] flex items-center justify-center bg-grid"
-                        style={{ backgroundImage: `url(${bgImg})` }}
-                  >
-                        <h1 className="text-6xl font-bold text-gray-800">
-                              FAQ
-                        </h1>
-                  </div>
+                  <div className="h-[50vh] w-full">
+  <img src={faqImg} className="h-full object-cover w-full" />
+</div>
+
                   <div className="bg-gray-200 ">
                         <div className="container mx-auto py-12">
                               <div className="text-center mb-8">
@@ -57,7 +54,7 @@ export default function Faq() {
                                     </p>
                               </div>
 
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
                                     <div className="flex justify-center">
                                           <img
                                                 src={heroBanner}
