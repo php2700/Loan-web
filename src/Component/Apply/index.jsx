@@ -33,6 +33,7 @@ export default function Apply() {
     ifscCode: "",
     bankName: "",
     branchName: "",
+    contactNumber:""
   });
 
   const handleChange = (e) => {
@@ -51,6 +52,7 @@ export default function Apply() {
     if (!formData.loanType) return "Please select a Loan Type";
     if (!formData.gender) return "Please select Gender";
     if (!formData.occupation) return "Please select Occupation";
+    if(!formData.contactNumber.trim())return "Contact number is required";
     if (!formData.accountHolderName.trim())
       return "Account holder name is required";
     if (!formData.accountNumber.trim()) return "Account number is required";
@@ -103,6 +105,7 @@ export default function Apply() {
         ifscCode: "",
         bankName: "",
         branchName: "",
+        contactNumber:""
       });
     } catch (err) {
       setError(err.message);
@@ -333,6 +336,19 @@ export default function Apply() {
                 <option value="Businessman">Businessman</option>
               </select>
             </div>
+                <div>
+              <label className="block font-semibold">
+                * Contact Number
+              </label>
+              <input
+                type="text"
+                name="contactNumber"
+                value={formData.contactNumber}
+                onChange={handleChange}
+                placeholder="contact number"
+                className="w-full p-2 border rounded"
+              />
+            </div>
             <div>
               <label className="block font-semibold">
                 * Account Holder Name
@@ -346,6 +362,7 @@ export default function Apply() {
                 className="w-full p-2 border rounded"
               />
             </div>
+                    
             <div>
               <label className="block font-semibold">* Account Number</label>
               <input

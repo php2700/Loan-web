@@ -28,7 +28,7 @@ const Team = () => {
       role: "Technology Lead",
       img: member4,
     },
-     {
+    {
       name: "Sneha Kapoor",
       role: "Customer Relations Manager",
       img: member4,
@@ -45,7 +45,7 @@ const Team = () => {
           Our Loan Section Team Members
         </p>
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-12">
-           Our professional team members.
+          Our professional team members.
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-10">
@@ -68,6 +68,9 @@ const Team = () => {
             </div>
           ))}
         </div>
+        <p className=" text-xl font-semibold text-red-500 mt-8">
+          You have to return this amount after 30 days with 2% interest.
+        </p>
       </div>
     </section>
   );

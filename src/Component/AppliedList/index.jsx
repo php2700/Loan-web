@@ -62,6 +62,9 @@ export const Applied = () => {
               <th className="py-2 px-4 text-left border-b border-gray-200">
                 Occupation
               </th>
+               <th className="py-2 px-4 text-left border-b border-gray-200">
+                Contact
+              </th>
               <th className="py-2 px-4 text-left border-b border-gray-200">
                 Account Holder
               </th>
@@ -121,6 +124,9 @@ export const Applied = () => {
                   </td>
                   <td className="py-2 px-4 border-b border-gray-200">
                     {apply.occupation}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200">
+                    {apply.contactNumber? apply?.contactNumber :'N/A' }
                   </td>
                   <td className="py-2 px-4 border-b border-gray-200">
                     {apply.accountHolderName ? apply.accountHolderName :'N/A'}

@@ -34,25 +34,25 @@ function Footer() {
                 onClick={() => handleUrl("")}
                 className="hover:text-white cursor-pointer"
               >
-                Home
+                Welcome
               </li>
               <li
                 onClick={() => handleUrl("services")}
                 className="hover:text-white cursor-pointer"
               >
-                Services
+                Our Solutions
               </li>
               <li
                 onClick={() => handleUrl("faq")}
                 className="hover:text-white cursor-pointer"
               >
-                Faqs
+                Help Center
               </li>
               <li
                 onClick={() => handleUrl("contact")}
                 className="hover:text-white cursor-pointer"
               >
-                Contact Us
+                Get in Touch
               </li>
             </ul>
           </div>
