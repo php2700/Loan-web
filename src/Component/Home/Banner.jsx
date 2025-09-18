@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import banner1 from "../../assets/banner1.jpg";
 import banner2 from "../../assets/banner2.webp";
 import banner3 from "../../assets/banner3.jpg";
+// import banner3 from "../../assets/banner4.jpg"
 
 const images = [banner1, banner2, banner3];
 

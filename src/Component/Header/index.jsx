@@ -59,10 +59,10 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/services", label: "Services" },
-    { to: "/faq", label: "Faqs" },
-    { to: "/contact", label: "Contact" },
+    { to: "/", label: "Welcome" },
+    { to: "/services", label: "Our Solutions" },
+    { to: "/faq", label: "Help Center" },
+    { to: "/contact", label: "Get in Touch" },
   ];
 
   return (
@@ -78,7 +78,7 @@ const Header = () => {
       </div>
 
       {/* Desktop Nav */}
-      <ul className="hidden md:flex space-x-8 font-semibold text-gray-900">
+      <ul className="hidden lg:flex space-x-8 font-semibold text-gray-900">
         {navLinks.map(({ to, label }) => (
           <li key={to}>
             <NavLink
@@ -98,7 +98,7 @@ const Header = () => {
       </ul>
 
       {/* Desktop User/Signup */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         {!user ? (
           <button
             onClick={handleSignUp}
@@ -168,15 +168,19 @@ const Header = () => {
 
       {/* Mobile Menu Button */}
       <button
-        className="md:hidden flex items-center"
+        className="lg:hidden flex items-center"
         onClick={() => setMobileMenuOpen((prev) => !prev)}
       >
-        {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+        {mobileMenuOpen ? (
+          <X className="w-7 h-7" />
+        ) : (
+          <Menu className="w-7 h-7" />
+        )}
       </button>
 
       {/* Mobile Dropdown */}
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-md md:hidden flex flex-col items-start px-6 py-4 space-y-4">
+        <div className="absolute top-full left-0 w-full bg-white shadow-md lg:hidden flex flex-col items-start px-6 py-4 space-y-4">
           {navLinks.map(({ to, label }) => (
             <NavLink
               key={to}

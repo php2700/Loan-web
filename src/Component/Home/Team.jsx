@@ -9,23 +9,28 @@ import member4 from "../../assets/teamMember4.jpg";
 const Team = () => {
   const members = [
     {
-      name: "Rajesh Kumar",
-      role: "Volunteer leader",
+      name: "Rahul Mehta",
+      role: "Founder & CEO",
       img: member1,
     },
     {
-      name: "Amit Sharma",
-      role: "Volunteer leader",
+      name: "Ankit Sharma",
+      role: "Head of Operations",
       img: member2,
     },
     {
-      name: "Rohan Verma",
-      role: "Volunteer leader",
+      name: "Priya Nair",
+      role: "Finance & Compliance Manager",
       img: member3,
     },
     {
-      name: "Arjun Singh",
-      role: "Volunteer leader",
+      name: "Karan Verma",
+      role: "Technology Lead",
+      img: member4,
+    },
+     {
+      name: "Sneha Kapoor",
+      role: "Customer Relations Manager",
       img: member4,
     },
   ];
@@ -40,25 +45,25 @@ const Team = () => {
           Our Loan Section Team Members
         </p>
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-12">
-          Take a look to our professional team members.
+           Our professional team members.
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {members.map((member, index) => (
             <div
               key={index}
               className="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-lg transition"
             >
-              <img
+              {/* <img
                 src={member.img}
                 alt={member.name}
                 className="w-full h-64 object-cover rounded-md"
-              />
+              /> */}
               <div className="mt-4">
                 <h3 className="text-lg font-semibold text-gray-900">
                   {member.name}
                 </h3>
-                {/* <p className="text-sm text-gray-500">{member.role}</p> */}
+                <p className="text-sm text-gray-500">{member.role}</p>
               </div>
             </div>
           ))}
