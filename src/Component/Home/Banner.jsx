@@ -29,7 +29,7 @@ const Banner = () => {
 
   return (
     <>
-      <div className="relative grid grid-cols-1 min-h-[60vh] md:min-h-[80vh] overflow-hidden">
+      {/* <div className="relative grid grid-cols-1 min-h-[60vh] md:min-h-[80vh] overflow-hidden">
         <img
           src={images[currentIndex]}
           className="w-full h-[60vh] md:h-[80vh] lg:h-[100vh] object-cover
@@ -43,7 +43,30 @@ const Banner = () => {
         >
           GET STARTED
         </button>
+      </div> */}
+
+
+  
+<div className="w-full">
+      <div className="relative w-full aspect-[16/9] overflow-hidden">
+        <img
+          src={images[currentIndex]}
+          alt="slider"
+          className="w-full h-full object-cover transition-all duration-1000 ease-in-out"
+        />
       </div>
+
+      <div className="w-full flex justify-center py-4 bg-red-500 hover:bg-red-600 transition">
+        <button
+          onClick={handleStarted}
+          className="text-sm sm:text-base md:text-lg lg:text-xl px-4 sm:px-6 md:px-8 py-2 rounded-lg sm:rounded-xl text-white font-bold"
+        >
+          GET STARTED
+        </button>
+      </div>
+    </div>
+
+
     </>
   );
 };
