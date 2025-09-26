@@ -441,7 +441,7 @@ export default function Apply() {
           <div className="bg-white rounded-lg p-6 w-[400px] shadow-lg">
             <h2 className="text-xl font-bold mb-4">Complete Payment</h2>
             <div className="text-sm text-gray-600 text-center mb-4">
-              your prossecing fee is 100 only
+              your processing fee is 100 only
             </div>
             {/* QR Code */}
             <div className="flex justify-center mb-4">

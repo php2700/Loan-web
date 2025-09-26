@@ -18,7 +18,7 @@ function Footer() {
       <div className="px-6 md:px-20 py-10">
         <nav className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto">
           <div>
-            <div className="h-10 ">
+            <div className="h-12 ">
               <img src={logo1} className="h-full object-contain " />
             </div>
 
@@ -60,16 +60,37 @@ function Footer() {
           <div>
             <h2 className="text-xl font-semibold mb-4">Support</h2>
             <ul className="space-y-2 text-gray-400">
-              {/* <li className="hover:text-white cursor-pointer">FAQ</li> */}
-              <li className="hover:text-white cursor-pointer" onClick={()=>handleUrl("term-condition")}>
+              <li
+                className="hover:text-white cursor-pointer"
+                onClick={() => handleUrl("term-condition")}
+              >
                 Terms & Conditions
               </li>
-              <li className="hover:text-white cursor-pointer" onClick={()=>handleUrl("privacy-policy")}>
+              <li
+                className="hover:text-white cursor-pointer"
+                onClick={() => handleUrl("privacy-policy")}
+              >
                 Privacy Policy
               </li>
-              {/* <li className="hover:text-white cursor-pointer">
-                                                Report a Payment Issue
-                                          </li> */}
+              <li
+                className="hover:text-white cursor-pointer"
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator
+                      .share({
+                        title: "Website",
+                        text: "Check this out!",
+                        url: window.location.href,
+                      })
+                      .then(() => console.log("Thanks for sharing!"))
+                      .catch((err) => console.error("Error sharing:", err));
+                  } else {
+                    alert("Sharing not supported in this browser.");
+                  }
+                }}
+              >
+                Share
+              </li>
             </ul>
           </div>
           <div>

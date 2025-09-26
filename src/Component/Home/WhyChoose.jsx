@@ -1,6 +1,8 @@
 import React from "react";
 import { Check } from "lucide-react";
-import whyChoose from "../../assets/whyChoose.webp"
+// import whyChoose from "../../assets/whyChoose.webp"
+import whyChoose from "../../assets/whyChoose.png"
+
 
 const WhyChoose = () => {
       return (
@@ -44,7 +46,7 @@ const WhyChoose = () => {
                               <img
                                     src={whyChoose}
                                     alt="Business professional"
-                                    className="rounded-lg shadow-md"
+                                    className="rounded-lg shadow-md "
                               />
                               <div className="absolute top-1/2 -right-10 transform -translate-y-1/2 bg-[#0C3B57] text-white px-4 py-2 rotate-90 font-bold text-lg tracking-wide">
                                     SINCE 1995

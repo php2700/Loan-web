@@ -4,8 +4,9 @@ import bgImg from "../../assets/h1_hero.jpg";
 import { useNavigate } from "react-router-dom";
 import banner1 from "../../assets/banner1.jpg";
 import banner2 from "../../assets/banner2.webp";
-import banner3 from "../../assets/banner3.jpg";
+// import banner3 from "../../assets/banner3.jpg";
 // import banner3 from "../../assets/banner4.jpg"
+import banner3 from "../../assets/banner6.png"
 
 const images = [banner1, banner2, banner3];
 
@@ -61,7 +62,7 @@ const Banner = () => {
           onClick={handleStarted}
           className="text-sm sm:text-base md:text-lg lg:text-xl px-4 sm:px-6 md:px-8 py-2 rounded-lg sm:rounded-xl text-white font-bold"
         >
-          GET STARTED
+          APPLY LOAN
         </button>
       </div>
     </div>
