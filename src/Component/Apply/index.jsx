@@ -3,6 +3,7 @@ import bgImg from "../../assets/h1_hero.jpg";
 import axios from "axios";
 import { QRCodeCanvas as QRCode } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
+import clientScanner from "../../assets/client-scanner.png";
 
 export default function Apply() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function Apply() {
     ifscCode: "",
     bankName: "",
     branchName: "",
-    contactNumber:""
+    contactNumber: "",
   });
 
   const handleChange = (e) => {
@@ -52,7 +53,7 @@ export default function Apply() {
     if (!formData.loanType) return "Please select a Loan Type";
     if (!formData.gender) return "Please select Gender";
     if (!formData.occupation) return "Please select Occupation";
-    if(!formData.contactNumber.trim())return "Contact number is required";
+    if (!formData.contactNumber.trim()) return "Contact number is required";
     if (!formData.accountHolderName.trim())
       return "Account holder name is required";
     if (!formData.accountNumber.trim()) return "Account number is required";
@@ -75,7 +76,7 @@ export default function Apply() {
       return;
     }
     formData.userId = userId;
-    formData.loanAmount=500;
+    formData.loanAmount = 500;
     try {
       setLoading(true);
       const response = await axios.post(
@@ -105,7 +106,7 @@ export default function Apply() {
         ifscCode: "",
         bankName: "",
         branchName: "",
-        contactNumber:""
+        contactNumber: "",
       });
     } catch (err) {
       setError(err.message);
@@ -336,10 +337,8 @@ export default function Apply() {
                 <option value="Businessman">Businessman</option>
               </select>
             </div>
-                <div>
-              <label className="block font-semibold">
-                * Contact Number
-              </label>
+            <div>
+              <label className="block font-semibold">* Contact Number</label>
               <input
                 type="text"
                 name="contactNumber"
@@ -362,7 +361,7 @@ export default function Apply() {
                 className="w-full p-2 border rounded"
               />
             </div>
-                    
+
             <div>
               <label className="block font-semibold">* Account Number</label>
               <input
@@ -445,7 +444,7 @@ export default function Apply() {
             </div>
             {/* QR Code */}
             <div className="flex justify-center mb-4">
-              <QRCode value={`pay-to-user-${userId}`} size={150} />
+              <img src={clientScanner} className="max-w-xs  h-40" />
             </div>
             <p className="text-sm text-gray-600 text-center mb-4">
               Scan this QR code to make payment.

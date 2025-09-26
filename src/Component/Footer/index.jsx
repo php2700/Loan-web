@@ -72,24 +72,26 @@ function Footer() {
               >
                 Privacy Policy
               </li>
-              <li
-                className="hover:text-white cursor-pointer"
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator
-                      .share({
-                        title: "Website",
-                        text: "Check this out!",
-                        url: window.location.href,
-                      })
-                      .then(() => console.log("Thanks for sharing!"))
-                      .catch((err) => console.error("Error sharing:", err));
-                  } else {
-                    alert("Sharing not supported in this browser.");
-                  }
-                }}
-              >
-                Share
+              <li>
+                <button
+                  className="border font-bold rounded-md px-6 py-2 cursor-pointer text-white bg-[#0C3B57]"
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator
+                        .share({
+                          title: "Website",
+                          text: "Check this out!",
+                          url: window.location.href,
+                        })
+                        .then(() => console.log("Thanks for sharing!"))
+                        .catch((err) => console.error("Error sharing:", err));
+                    } else {
+                      alert("Sharing not supported in this browser.");
+                    }
+                  }}
+                >
+                  Share
+                </button>
               </li>
             </ul>
           </div>
