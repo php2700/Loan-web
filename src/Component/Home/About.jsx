@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FiShare2 } from "react-icons/fi";
 
 const AboutSection = () => {
       const navigate=useNavigate()
@@ -8,6 +9,29 @@ const AboutSection = () => {
       }
       return (
             <section className="w-full bg-white py-16">
+              <div className="max-w-7xl mx-auto my-2 px-6 flex justify-end cursor-pointer gap-10 items-center">
+      <button
+        className="border font-bold rounded-md px-6 py-2 cursor-pointer text-white bg-[#0C3B57] flex items-center gap-2"
+        onClick={() => {
+          if (navigator.share) {
+            navigator
+              .share({
+                title: "Website",
+                text: "Check this out!",
+                url: window.location.href,
+              })
+              .then(() => console.log("Thanks for sharing!"))
+              .catch((err) => console.error("Error sharing:", err));
+          } else {
+            alert("Sharing not supported in this browser.");
+          }
+        }}
+      >
+        <FiShare2 size={18} />
+        <span>Share</span>
+      </button>
+    </div>
+
                   <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
                         <div className="flex justify-center md:justify-end">
                               <img
