@@ -27,15 +27,18 @@ export const Referral = () => {
   useEffect(() => {
     if (!token || !userId) return;
 
-    axios
-      .get(
-        `${import.meta.env.VITE_APP_API_BASE_URL}api/user/referrals/${userId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => setReferrals(res.data))
-      .catch((err) => console.error(err));
+axios
+axios
+  .get(`${import.meta.env.VITE_APP_API_BASE_URL}api/user/referrals/${userId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  .then((res) => {
+    console.log(res.data); // Check structure
+    setReferrals(Array.isArray(res.data) ? res.data : res.data.referrals || []);
+  })
+  .catch((err) => console.error(err));
+
+
   }, [token, userId]);
 
   return (
@@ -104,3 +107,7 @@ export const Referral = () => {
     </div>
   );
 };
+
+
+
+

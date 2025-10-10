@@ -44,6 +44,9 @@ const Signup = () => {
 
   const handleSubmit = useCallback(() => {
     const userId = localStorage.getItem("userId");
+    console.log("Referral code bhej rahe:", referralCode);
+console.log("User ID bhej rahe:", localStorage.getItem("userId"));
+
     setShowModal(false);
     axios
       .patch(
@@ -54,6 +57,7 @@ const Signup = () => {
         }
       )
       .then((res) => {
+        console.log(`res;- ${res}`)
         navigate("/apply");
       })
       .catch((error) => {
@@ -121,3 +125,5 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
