@@ -63,7 +63,7 @@ console.log("User ID bhej rahe:", localStorage.getItem("userId"));
       .catch((error) => {
         console.log(error, "Referral update error");
       });
-  }, []);
+  }, [referralCode]);
 
   return (
     <section className="pt-16 w-full">
