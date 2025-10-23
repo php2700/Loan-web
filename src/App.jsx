@@ -42,6 +42,7 @@ function App() {
             <Route path="/faq" element={<Faq />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/apply" element={<PrivateRoute><Apply /></PrivateRoute>} />
+            
             <Route path="/referrals" element={<PrivateRoute><Referral /></PrivateRoute>} />
             <Route path="/applied-list" element={<PrivateRoute><Applied /></PrivateRoute>} />
             <Route path='/add-bank-detail' element={<PrivateRoute><AddBankDetail/></PrivateRoute>} />

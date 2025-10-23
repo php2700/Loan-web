@@ -4,161 +4,13 @@ import axios from "axios";
 import { QRCodeCanvas as QRCode } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
 import clientScanner from "../../assets/client-scanner.png";
+import account from "../../assets/account.png";
+import share from "../../assets/share.png";
+import google from "../../assets/google.jpg";
 
 export default function Apply() {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("loanToken");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [successModel, setSuccessModel] = useState(false);
-
-  const [loanApplicationId, setLoanApplicationId] = useState();
-  const [preview, setPreview] = useState(null);
-
-  const [formData, setFormData] = useState({
-    loanType: "",
-    gender: "",
-    fullName: "",
-    fatherName: "",
-    motherName: "",
-    address: "",
-    city: "",
-    state: "",
-    occupation: "",
-    accountHolderName: "",
-    accountNumber: "",
-    ifscCode: "",
-    bankName: "",
-    branchName: "",
-    contactNumber: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setError("");
-  };
-
-  const validateForm = () => {
-    if (!formData.fullName.trim()) return "Full Name is required";
-    if (!formData.fatherName.trim()) return "Father Name is required";
-    if (!formData.motherName.trim()) return "Mother Name is required";
-    if (!formData.address.trim()) return "Address is required";
-    if (!formData.city.trim()) return "City is required";
-    if (!formData.state.trim()) return "State is required";
-    if (!formData.loanType) return "Please select a Loan Type";
-    if (!formData.gender) return "Please select Gender";
-    if (!formData.occupation) return "Please select Occupation";
-    if (!formData.contactNumber.trim()) return "Contact number is required";
-    if (!formData.accountHolderName.trim())
-      return "Account holder name is required";
-    if (!formData.accountNumber.trim()) return "Account number is required";
-    if (!formData.ifscCode.trim()) return "IFSC Code is required";
-    if (!formData.bankName.trim()) return "Bank name is required";
-    if (!formData.branchName.trim()) return "Branch name is required";
-
-    return "";
-  };
-
-  const handleSubmit = async (e) => {
-    const userId = localStorage.getItem("userId");
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    const validationError = validateForm();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-    formData.userId = userId;
-    formData.loanAmount = 500;
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        `${import.meta.env.VITE_APP_API_BASE_URL}api/user/apply-loan`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setLoanApplicationId(response?.data?.applyLoanData?._id);
-      setIsModalOpen(true);
-      setSuccess("Your application submitted successfully!");
-      setFormData({
-        loanType: "",
-        gender: "",
-        fullName: "",
-        fatherName: "",
-        motherName: "",
-        address: "",
-        city: "",
-        state: "",
-        occupation: "",
-        accountHolderName: "",
-        accountNumber: "",
-        ifscCode: "",
-        bankName: "",
-        branchName: "",
-        contactNumber: "",
-      });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setUploadedFile(file);
-      setPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handlePaymentSubmit = async () => {
-    if (!uploadedFile) {
-      alert("Please upload an image");
-      return;
-    }
-
-    const paymentData = new FormData();
-    paymentData.append("userId", userId);
-    paymentData.append("loanApplicationId", loanApplicationId);
-    paymentData.append("paymentImage", uploadedFile);
-
-    try {
-      await axios.patch(
-        `${import.meta.env.VITE_APP_API_BASE_URL}api/user/payment-proof`,
-        paymentData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setIsModalOpen(false);
-      setUploadedFile(null);
-      setSuccessModel(true);
-
-      setTimeout(() => {
-        setSuccessModel(false);
-        navigate("/referrals");
-      }, 4000);
-    } catch (err) {
-      alert(
-        "Error submitting payment proof: " +
-          (err.response?.data?.message || err.message)
-      );
-    }
-  };
 
   return (
     <section className="w-full pt-16">
@@ -166,340 +18,145 @@ export default function Apply() {
         className="h-[50vh] flex items-center justify-center bg-grid"
         style={{ backgroundImage: `url(${bgImg})` }}
       >
-        <h1 className="text-6xl font-bold text-gray-800">APPLY LOAN</h1>
+        <h1 className="text-6xl font-bold text-gray-800">REFER & EARN</h1>
       </div>
 
-      <div className="bg-gray-200 p-10">
-        <form
-          onSubmit={handleSubmit}
-          className="max-w-6xl mx-auto p-10 bg-white shadow-md rounded-xl"
-        >
-          {/* Show error or success messages */}
-          {error && (
-            <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
-              {error}
-            </div>
-          )}
-          {success && (
-            <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">
-              {success}
-            </div>
-          )}
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl">
+          <h1 className="text-2xl font-bold text-center mb-4">
+            Refer & Earn – Har Friend Pe ₹300 Kamao! 💰
+          </h1>
+          <p className="text-center text-gray-600 mb-4">
+            Join karo, ₹100 activate fee do, aur apna referral link share karo!
+            Jab koi join kare aur payment kare → payment karo!
+          </p>
+          <button className="w-full bg-blue-500 text-white py-2 rounded-lg mb-6">
+            Start Now
+          </button>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Full Name */}
-            <div>
-              <label className="block font-semibold">* Full Name</label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                placeholder="Enter full name"
-                className="w-full p-2 border rounded"
-              />
-            </div>
+          <h2 className="text-xl font-semibold text-center mb-4">
+            How it Works
+          </h2>
 
-            {/* Father Name */}
+          {/* 3-column steps with real icons */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 text-center">
+            {/* 1. Google Login */}
             <div>
-              <label className="block font-semibold">* Father Name</label>
-              <input
-                type="text"
-                name="fatherName"
-                value={formData.fatherName}
-                onChange={handleChange}
-                placeholder="Enter father name"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            {/* Mother Name */}
-            <div>
-              <label className="block font-semibold">* Mother Name</label>
-              <input
-                type="text"
-                name="motherName"
-                value={formData.motherName}
-                onChange={handleChange}
-                placeholder="Enter mother name"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            {/* Address */}
-            <div>
-              <label className="block font-semibold">* Address</label>
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                placeholder="Enter address"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            {/* City */}
-            <div>
-              <label className="block font-semibold">* City</label>
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                placeholder="Enter city"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            {/* State */}
-            <div>
-              <label className="block font-semibold">* State</label>
-              <input
-                type="text"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                placeholder="Enter state"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            {/* Loan Amount */}
-            <div>
-              <label className="block font-semibold">* Loan Amount</label>
-              <input
-                type="number"
-                disabled
-                name="loanAmount"
-                value={500}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            {/* Loan Type */}
-            <div>
-              <label className="block font-semibold">* Loan Type</label>
-              <select
-                name="loanType"
-                value={formData.loanType}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
+              <div
+                className=" rounded-full inline-flex items-center justify-center mb-3 mx-auto"
+                style={{ width: 64, height: 64 }}
               >
-                <option value="">Choose Categories</option>
-                <option value="Personal">Personal</option>
-                <option value="Education">Study</option>
-                <option value="Business">Business</option>
-              </select>
-            </div>
-
-            {/* Gender */}
-            <div className="md:col-span-2">
-              <label className="block font-semibold">* Gender</label>
-              <div className="flex items-center space-x-4 mt-2">
-                <label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="Male"
-                    checked={formData.gender === "Male"}
-                    onChange={handleChange}
-                    className="mr-1"
-                  />
-                  Male
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="Female"
-                    checked={formData.gender === "Female"}
-                    onChange={handleChange}
-                    className="mr-1"
-                  />
-                  Female
-                </label>
+                <img src={google} alt="Google" className="w-12 h-12" />
               </div>
+              <p className="text-gray-800">
+                <strong>Login / Sign Up</strong>
+                <br />
+                Google se 1-click login karo.
+              </p>
             </div>
 
-            {/* Occupation */}
+            {/* 2. Activate Account (Payment) */}
             <div>
-              <label className="block font-semibold">* Occupation</label>
-              <select
-                name="occupation"
-                value={formData.occupation}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
+              <div
+                className="  inline-flex items-center justify-center mb-3 mx-auto"
+                style={{ width: 64, height: 64 }}
               >
-                <option value="">Your Occupation</option>
-                <option value="Student">Student</option>
-                <option value="Job">Job</option>
-                <option value="Businessman">Businessman</option>
-              </select>
-            </div>
-            <div>
-              <label className="block font-semibold">* Contact Number</label>
-              <input
-                type="text"
-                name="contactNumber"
-                value={formData.contactNumber}
-                onChange={handleChange}
-                placeholder="contact number"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block font-semibold">
-                * Account Holder Name
-              </label>
-              <input
-                type="text"
-                name="accountHolderName"
-                value={formData.accountHolderName}
-                onChange={handleChange}
-                placeholder="Enter account holder name"
-                className="w-full p-2 border rounded"
-              />
+                <img src={account} alt="Payment" className="w-12 h-12" />
+              </div>
+              <p className="text-gray-800">
+                <strong>Activate Account ₹100</strong>
+                <br />
+                Payment karo hi referral link unlock ho jata hai.
+              </p>
             </div>
 
+            {/* 3. Share & Earn */}
             <div>
-              <label className="block font-semibold">* Account Number</label>
-              <input
-                type="text"
-                name="accountNumber"
-                value={formData.accountNumber}
-                onChange={handleChange}
-                placeholder="Enter account number"
-                className="w-full p-2 border rounded"
-              />
+              <div
+                className="  rounded-full inline-flex items-center justify-center mb-3 mx-auto "
+                style={{ width: 64, height: 64 }}
+              >
+                <img src={share} alt="Share" className="w-12 h-12" />
+              </div>
+              <p className="text-gray-800">
+                <strong>Share & Earn</strong>
+                <br />
+                Apna link WhatsApp, Instagram par share karo. Har payment par
+                ₹300 earn karo.
+              </p>
             </div>
-            <div>
-              <label className="block font-semibold">* IFSC Code</label>
-              <input
-                type="text"
-                name="ifscCode"
-                value={formData.ifscCode}
-                onChange={handleChange}
-                placeholder="Enter IFSC code"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold">* Bank Name</label>
-              <input
-                type="text"
-                name="bankName"
-                value={formData.bankName}
-                onChange={handleChange}
-                placeholder="Enter bank name"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold">* Branch Name</label>
-              <input
-                type="text"
-                name="branchName"
-                value={formData.branchName}
-                onChange={handleChange}
-                placeholder="Enter branch name"
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            {/* Email */}
-            {/* <div>
-              <label className="block font-semibold">* Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter email"
-                className="w-full p-2 border rounded"
-              />
-            </div> */}
           </div>
 
-          {/* Submit */}
-          <div className="mt-6">
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full md:w-auto px-6 py-2 bg-[#0C3B57] text-white font-semibold rounded disabled:opacity-50"
-            >
-              {loading ? "Submitting..." : "APPLY NOW"}
-            </button>
-          </div>
-        </form>
-      </div>
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-          <div className="bg-white rounded-lg p-6 w-[400px] shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Complete Payment</h2>
-            <div className="text-sm text-gray-600 text-center mb-4">
-              your processing fee is 100 only
-            </div>
-            {/* QR Code */}
-            <div className="flex justify-center mb-4">
-              <img src={clientScanner} className="max-w-xs  h-40" />
-            </div>
-            <p className="text-sm text-gray-600 text-center mb-4">
-              Scan this QR code to make payment.
-            </p>
+          <button className="w-full bg-blue-500 text-white py-2 rounded-lg mb-6">
+            Activate & Get Link
+          </button>
 
-            <div className="mb-4">
-              <label
-                htmlFor="payment-proof"
-                className="block w-full px-4 py-2 text-center bg-gray-100 border border-gray-300 rounded cursor-pointer hover:bg-gray-200"
-              >
-                Upload Payment Screenshot
-              </label>
-              <input
-                id="payment-proof"
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+          <h2 className="text-xl font-semibold text-center mb-4">
+            Wallet & Referral Overview
+          </h2>
+          <div className="grid grid-cols-2 gap-4 text-center mb-4">
+            <div>
+              <p>
+                Wallet Balance <br />
+                <span className="font-bold">₹1450</span>
+              </p>
             </div>
-            {preview && (
-              <div className="flex justify-center mb-4">
+            <div>
+              <p>
+                Active Referrals <br />
+                <span className="font-bold">12</span>
+              </p>
+            </div>
+            <div>
+              <p>
+                Pending Referrals <br />
+                <span className="font-bold">3</span>
+              </p>
+            </div>
+            <div>
+              <p>
+                Min. Withdrawal <br />
+                <span className="font-bold">₹1200</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center mb-4">
+            <p className="font-medium">fatatrefer.in/?tee#aa12</p>
+            <div className="flex justify-center space-x-4 m-2">
+              <button className="flex items-center gap-2 bg-green-500 text-white py-1 px-3 rounded">
                 <img
-                  src={preview}
-                  alt="Payment Preview"
-                  className="w-24 h-24 object-cover rounded border"
+                  src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+                  alt="WhatsApp"
+                  className="w-4 h-4"
                 />
-              </div>
-            )}
-            <div className="flex justify-between">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 bg-gray-300 rounded"
-              >
-                Cancel
+                WhatsApp
               </button>
-              <button
-                onClick={handlePaymentSubmit}
-                className="px-4 py-2 bg-[#0C3B57] text-white rounded"
-              >
-                Submit
+              <button className="flex items-center gap-2 bg-gray-200 text-gray-800 py-1 px-3 rounded">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/60/60990.png"
+                  alt="Copy"
+                  className="w-4 h-4"
+                />
+                Copy
+              </button>
+              <button className="flex items-center gap-2 bg-pink-500 text-white py-1 px-3 rounded">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png"
+                  alt="Instagram"
+                  className="w-4 h-4"
+                />
+                Instagram
               </button>
             </div>
           </div>
+
+          <button className="w-full bg-blue-500 text-white py-2 rounded-lg mb-4">
+            Withdraw
+          </button>
+          <p className="text-center text-gray-600">Already 50,000+</p>
         </div>
-      )}
-      {successModel && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-md">
-          <div className="bg-white rounded-lg p-6 w-[400px] shadow-lg">
-            <p className="text-lg font-semibold text-gray-600 text-center mb-4">
-              within 24 hours loan amount disbursed in your bank account
-            </p>
-          </div>
-        </div>
-      )}
+      </div>
     </section>
   );
 }
