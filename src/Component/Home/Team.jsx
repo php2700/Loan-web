@@ -68,9 +68,9 @@ const Team = () => {
             </div>
           ))}
         </div>
-        {/* <p className=" text-xl font-semibold text-red-500 mt-8">
+        <p className=" text-xl font-semibold text-red-500 mt-8">
           You have to return this amount after 30 days with 2% interest.
-        </p> */}
+        </p>
       </div>
     </section>
   );
